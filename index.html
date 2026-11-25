@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b14">
+  <meta name="description" content="PROJECT NEXUS - Your personal futuristic web desktop.">
+
+  <title>PROJECT NEXUS</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+
+  <div class="wallpaper-glow"></div>
+
+  <main id="desktop">
+
+    <div class="desktop-icons" id="desktopIcons">
+
+      <div class="desktop-icon" data-app="explorer">
+        <div class="icon-box">📁</div>
+        <span>File Explorer</span>
+      </div>
+
+      <div class="desktop-icon" data-app="notes">
+        <div class="icon-box">📝</div>
+        <span>Notes</span>
+      </div>
+
+      <div class="desktop-icon" data-app="calculator">
+        <div class="icon-box">🧮</div>
+        <span>Calculator</span>
+      </div>
+
+      <div class="desktop-icon" data-app="settings">
+        <div class="icon-box">⚙️</div>
+        <span>Settings</span>
+      </div>
+
+      <div class="desktop-icon" data-app="about">
+        <div class="icon-box">◈</div>
+        <span>About NEXUS</span>
+      </div>
+
+    </div>
+
+    <div id="windowLayer"></div>
+
+    <div id="contextMenu" class="context-menu hidden">
+      <button data-action="refresh">↻ Refresh</button>
+      <button data-action="new-note">＋ New Note</button>
+      <button data-action="settings">⚙ Personalise</button>
+    </div>
+
+    <div id="startMenu" class="start-menu hidden">
+
+      <div class="start-header">
+        <div class="nexus-logo">N</div>
+        <div>
+          <strong>PROJECT NEXUS</strong>
+          <small>Your digital workspace</small>
+        </div>
+      </div>
+
+      <input id="startSearch" type="text" placeholder="Search apps...">
+
+      <h4>PINNED APPLICATIONS</h4>
+
+      <div class="pinned-apps">
+        <button data-app="explorer">📁 Explorer</button>
+        <button data-app="notes">📝 Notes</button>
+        <button data-app="calculator">🧮 Calculator</button>
+        <button data-app="settings">⚙ Settings</button>
+        <button data-app="about">◈ About</button>
+      </div>
+
+      <div class="start-footer">
+        <span>◈ NEXUS USER</span>
+        <button id="powerButton">⏻</button>
+      </div>
+
+    </div>
+
+    <div id="searchPanel" class="search-panel hidden">
+      <input id="globalSearch" type="text" placeholder="Search apps and tools...">
+      <div id="searchResults"></div>
+    </div>
+
+    <div id="controlPanel" class="control-panel hidden">
+      <h3>CONTROL CENTRE</h3>
+      <div class="control-grid">
+        <button class="control-tile active">◉ Wi-Fi</button>
+        <button class="control-tile active">◈ Bluetooth</button>
+        <button class="control-tile">☾ Focus</button>
+        <button class="control-tile">✈ Airplane</button>
+      </div>
+      <label>Brightness (interface only)</label>
+      <input type="range" min="20" max="100" value="80">
+      <label>Volume (interface only)</label>
+      <input type="range" min="0" max="100" value="70">
+    </div>
+
+  </main>
+
+  <footer class="taskbar">
+
+    <button class="taskbar-start" id="startButton">
+      <span class="nexus-logo small">N</span>
+    </button>
+
+    <button id="searchButton" class="taskbar-button">⌕</button>
+
+    <div id="taskbarApps"></div>
+
+    <div class="taskbar-right">
+      <button id="controlButton">◉</button>
+      <div class="clock">
+        <span id="clockTime">00:00</span>
+        <small id="clockDate"></small>
+      </div>
+    </div>
+
+  </footer>
+
+  <script src="app.js"></script>
+
+</body>
+</html>
