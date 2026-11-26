@@ -542,11 +542,20 @@ function bindApp(app, content) {
 
 /* ---------- VIRTUAL FILE SYSTEM ---------- */
 
+
+  
+   
 function renderFiles(content) {
   const grid = content.querySelector("#fileGrid");
   grid.innerHTML = "";
+
   if (!state.files.length) {
-    grid.innerHTML = `<div class="empty-state"><span>📂</span>Your NEXUS Drive is empty.<br>Create your first text file.</div>`;
+    grid.innerHTML = `
+      <div class="empty-state">
+        <span>📂</span>
+        Your NEXUS Drive is empty.<br>
+        Create your first text file.
+      </div>`;
     return;
   }
 
@@ -554,33 +563,20 @@ function renderFiles(content) {
     const item = document.createElement("button");
     item.className = "file-item";
     item.innerHTML = `<span>📄</span>${escapeHTML(file.name)}`;
-    item.addEventListener("click", () => {
-      const name = prompt("Rename this file:", file.name);
-      if (name === null) return;
-      const trimmed = name.trim();
-      if (!trimmed) return;
-      file.name = trimmed;
-      saveState();
-      renderFiles(content);
-    });
-    item.addEventListener("contextmenu", e => {
-      e.preventDefault();
-      if (confirm(`Delete "${file.name}"?`)) {
-        state.files = state.files.filter(f => f.id !== file.id);
-        saveState();
-        renderFiles(content);
-      }
-    });
+
     item.addEventListener("dblclick", () => {
       const editor = document.createElement("div");
       editor.innerHTML = `
         <h2>${escapeHTML(file.name)}</h2>
         <textarea class="app-textarea" id="fileEditor"></textarea>
         <button class="app-button" id="saveFile">Save file</button>
+        <button class="secondary-button" id="backFiles">Back</button>
       `;
+
       grid.replaceWith(editor);
       const area = editor.querySelector("#fileEditor");
       area.value = file.content;
+
       editor.querySelector("#saveFile").addEventListener("click", () => {
         file.content = area.value;
         saveState();
@@ -588,10 +584,38 @@ function renderFiles(content) {
         closeApp("explorer");
         openApp("explorer");
       });
+
+      editor.querySelector("#backFiles").addEventListener("click", () => {
+        closeApp("explorer");
+        openApp("explorer");
+      });
     });
+
+    item.addEventListener("contextmenu", e => {
+      e.preventDefault();
+      const choice = prompt(
+        `File: ${file.name}\nType R to rename or D to delete:`
+      );
+
+      if (!choice) return;
+
+      if (choice.toLowerCase() === "r") {
+        const name = prompt("New file name:", file.name);
+        if (name && name.trim()) file.name = name.trim();
+      } else if (choice.toLowerCase() === "d") {
+        if (confirm(`Delete ${file.name}?`)) {
+          state.files = state.files.filter(f => f.id !== file.id);
+        }
+      }
+
+      saveState();
+      renderFiles(content);
+    });
+
     grid.appendChild(item);
   });
 }
+
 
 function createFile() {
   const name = prompt("Enter a file name:", "New document.txt");
