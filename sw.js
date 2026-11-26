@@ -1,15 +1,17 @@
 
-const CACHE_NAME = "nexus-desktop-v2";
+const CACHE_NAME = "nexus-desktop-v3";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
   "./nexus-v2.css",
+  "./nexus-v3.css",
   "./app.js",
   "./drive.js",
   "./boot.js",
   "./nexus-v2.js",
+  "./nexus-v3.js",
   "./manifest.json"
 ];
 
@@ -44,23 +46,21 @@ self.addEventListener("fetch", event => {
     caches.match(event.request).then(cached => {
       if (cached) return cached;
 
-      return fetch(event.request)
-        .then(response => {
-          if (
-            response &&
-            response.status === 200 &&
-            response.type === "basic"
-          ) {
-            const copy = response.clone();
+      return fetch(event.request).then(response => {
+        if (
+          response &&
+          response.status === 200 &&
+          response.type === "basic"
+        ) {
+          const copy = response.clone();
 
-            caches.open(CACHE_NAME).then(cache =>
-              cache.put(event.request, copy)
-            );
-          }
+          caches.open(CACHE_NAME).then(cache =>
+            cache.put(event.request, copy)
+          );
+        }
 
-          return response;
-        })
-        .catch(() => caches.match("./index.html"));
+        return response;
+      }).catch(() => caches.match("./index.html"));
     })
   );
 });
