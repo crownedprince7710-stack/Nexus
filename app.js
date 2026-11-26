@@ -830,3 +830,15 @@ if (state.entered) {
 }
 
 window.addEventListener("beforeunload", saveState);
+
+
+/* ---------- OFFLINE SUPPORT ---------- */
+
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js")
+      .then(() => console.log("NEXUS offline support ready"))
+      .catch(error => console.warn("Offline support unavailable:", error));
+  });
+}
+
