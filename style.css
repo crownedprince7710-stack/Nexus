@@ -260,3 +260,251 @@ button { color: inherit; cursor: pointer; }
   .start-menu { width: min(310px, calc(100vw - 20px)); left: 10px; }
   .control-panel { width: min(290px, calc(100vw - 20px)); right: 10px; }
 }
+
+
+/* ==========================================
+   NEXUS DRIVE 2.0
+========================================== */
+
+.drive-app {
+  width: 100%;
+  min-height: 100%;
+}
+
+.drive-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.drive-heading h2 {
+  margin-bottom: 4px;
+}
+
+.drive-heading p {
+  margin-top: 0;
+}
+
+.drive-storage-icon {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(var(--accent-rgb), .13);
+  color: var(--accent);
+  font-size: 25px;
+}
+
+.drive-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.drive-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 7px;
+  padding: 11px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.drive-crumb {
+  padding: 4px 2px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.drive-separator {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.drive-tools {
+  display: flex;
+  gap: 9px;
+  margin: 12px 0;
+}
+
+.drive-search {
+  flex: 1;
+  min-width: 0;
+}
+
+.drive-sort {
+  width: 115px;
+  flex-shrink: 0;
+}
+
+.drive-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.drive-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255,255,255,.025);
+  transition: background .2s, border-color .2s;
+}
+
+.drive-item:hover {
+  background: rgba(255,255,255,.065);
+  border-color: rgba(var(--accent-rgb),.4);
+}
+
+.drive-open {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.drive-file-icon {
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: rgba(255,255,255,.06);
+  font-size: 20px;
+}
+
+.drive-item-name {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.drive-open small {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.drive-more {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 7px;
+  background: rgba(255,255,255,.05);
+  color: var(--muted);
+}
+
+.drive-more:hover {
+  color: white;
+  background: rgba(var(--accent-rgb),.2);
+}
+
+.drive-empty {
+  padding: 35px 12px;
+  text-align: center;
+}
+
+.drive-empty > span {
+  font-size: 42px;
+}
+
+.drive-empty h3 {
+  margin: 12px 0 5px;
+  font-size: 15px;
+}
+
+.drive-empty p {
+  margin: 0;
+}
+
+.drive-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.drive-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 300px;
+}
+
+.drive-editor-top,
+.drive-editor-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.drive-editor-top span {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.drive-editor-area {
+  flex: 1;
+  min-height: 220px;
+  resize: none;
+}
+
+.drive-editor-bottom {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.drive-editor-bottom span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+@media (max-width: 500px) {
+  .drive-toolbar {
+    gap: 6px;
+  }
+
+  .drive-toolbar button {
+    padding: 9px 10px;
+    font-size: 10px;
+  }
+
+  .drive-tools {
+    flex-direction: column;
+  }
+
+  .drive-sort {
+    width: 100%;
+  }
+
+  .drive-open small {
+    display: none;
+  }
+}
+
