@@ -14,15 +14,21 @@ const $ = id => document.getElementById(id);
 
 export const Nexus = {
   windows: {},
-  active: null,
   storage: null,
+  cloud: null,
+
   notify(message) {
-    const el = document.createElement("div");
-    el.className = "toast";
-    el.textContent = message;
-    $("toast-container").append(el);
-    setTimeout(() => el.remove(), 3200);
+    const area = $("toast-area");
+    if (!area) return;
+
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.textContent = message;
+    area.append(toast);
+
+    setTimeout(() => toast.remove(), 3200);
   },
+
   open(name) {
     if (this.windows[name]) {
       this.windows[name].focus();
@@ -41,133 +47,183 @@ export const Nexus = {
     const app = apps[name];
     if (!app) return;
 
-    this.windows[name] = windowManager.create({
+    const win = windowManager.create({
       id: name,
       title: app[0],
       icon: app[1],
       render: app[2]
     });
 
+    this.windows[name] = win;
     this.updateTaskbar();
   },
+
   close(name) {
     windowManager.close(name);
     delete this.windows[name];
     this.updateTaskbar();
   },
+
   updateTaskbar() {
-    const root = $("task-apps");
-    root.replaceChildren();
+    document.querySelectorAll("[data-running-app]").forEach(el => el.remove());
+
+    const taskbar = document.querySelector(".taskbar");
+    if (!taskbar) return;
 
     Object.keys(this.windows).forEach(name => {
+      const icons = {
+        browser: "🌐",
+        files: "📁",
+        downloads: "⬇️",
+        settings: "⚙️",
+        ai: "✦",
+        about: "ⓘ"
+      };
+
       const button = document.createElement("button");
-      button.className = "task-app running";
-      button.textContent = ({
-        browser: "🌐", files: "📁", downloads: "⬇️",
-        settings: "⚙️", ai: "✦", about: "ⓘ"
-      })[name] || "□";
+      button.dataset.runningApp = name;
       button.title = name;
+      button.textContent = icons[name] || "□";
       button.onclick = () => this.windows[name]?.focus();
-      root.append(button);
+
+      const spacer = taskbar.querySelector(".taskbar-spacer");
+      taskbar.insertBefore(button, spacer || $("taskbar-clock"));
     });
   }
 };
 
+window.NexusApp = Nexus;
+
 const windowManager = initWindowManager(Nexus);
 
-function initAbout(container) {
-  container.innerHTML = `
+function initAbout(root) {
+  root.innerHTML = `
     <div class="panel">
       <h2>NEXUS V5</h2>
-      <p>Universal browser-based desktop environment.</p>
+      <p>Your personal browser-based desktop environment.</p>
       <p>Version 5.0.0</p>
-      <p>Built for mouse, keyboard and television browsers.</p>
-      <p>Local-first desktop with optional cloud services.</p>
-    </div>`;
+      <p>Designed for televisions, monitors, keyboards and mice.</p>
+      <p>Local storage with optional cloud services.</p>
+    </div>
+  `;
 }
 
-function clock() {
+function updateClock() {
   const now = new Date();
-  $("clock-time").textContent = now.toLocaleTimeString([], {
-    hour: "2-digit", minute: "2-digit"
+
+  const time = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
   });
-  $("clock-date").textContent = now.toLocaleDateString();
-  $("quick-clock").textContent = now.toLocaleString();
+
+  const date = now.toLocaleDateString();
+
+  if ($("top-clock")) $("top-clock").textContent = time;
+  if ($("taskbar-clock")) {
+    $("taskbar-clock").textContent = time;
+    $("taskbar-clock").title = date;
+  }
 }
 
-function boot() {
-  const status = $("boot-status");
-  status.textContent = "LOADING DESKTOP";
+function bindControls() {
+  // Desktop, Start menu and taskbar app launchers
+  document.addEventListener("click", event => {
+    const launcher = event.target.closest("[data-open]");
 
-  initDesktop(Nexus);
-
-  $("start-button").onclick = () =>
-    $("start-menu").classList.toggle("hidden");
-
-  $("task-search").onclick = () => Nexus.open("browser");
-
-  $("quick-button").onclick = () =>
-    $("quick-panel").classList.toggle("hidden");
-
-  $("power-button").onclick = () => {
-    if (confirm("Shut down NEXUS?")) {
-      $("desktop").classList.add("hidden");
-      $("boot-screen").classList.remove("hidden");
-      status.textContent = "NEXUS IS OFF";
+    if (launcher) {
+      event.preventDefault();
+      Nexus.open(launcher.dataset.open);
+      $("start-menu")?.classList.add("hidden");
     }
-  };
+  });
 
-  $("start-search-input").addEventListener("input", event => {
+  // Start menu
+  $("start-button")?.addEventListener("click", () => {
+    $("start-menu")?.classList.toggle("hidden");
+  });
+
+  // Search the installed app list
+  $("start-search")?.addEventListener("input", event => {
     const query = event.target.value.toLowerCase();
-    document.querySelectorAll("#start-app-grid button")
-      .forEach(button => {
-        button.hidden = !button.textContent.toLowerCase().includes(query);
-      });
+
+    document.querySelectorAll(".start-apps [data-open]").forEach(button => {
+      button.hidden = !button.textContent.toLowerCase().includes(query);
+    });
   });
 
-  document.querySelectorAll("[data-setting]").forEach(button => {
-    button.onclick = () => {
-      $("quick-panel").classList.add("hidden");
-      Nexus.open("settings");
-    };
+  // Power / restart
+  $("power-button")?.addEventListener("click", () => {
+    if (confirm("Restart NEXUS?")) {
+      location.reload();
+    }
   });
 
+  // Close menus with Escape
   document.addEventListener("keydown", event => {
     if (event.key === "Escape") {
-      $("start-menu").classList.add("hidden");
-      $("quick-panel").classList.add("hidden");
-      $("context-menu").classList.add("hidden");
+      $("start-menu")?.classList.add("hidden");
+      document.getElementById("context-menu")?.classList.add("hidden");
     }
 
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "e") {
+    if ((event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "e") {
       event.preventDefault();
       Nexus.open("files");
     }
 
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "l") {
+    if ((event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "l") {
       event.preventDefault();
       Nexus.open("browser");
     }
   });
+}
 
-  clock();
-  setInterval(clock, 1000);
-
-  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-    navigator.serviceWorker.register("./sw.js").catch(console.error);
-  }
-
-  initStorage().then(db => {
-    Nexus.storage = db;
+async function startStorage() {
+  try {
+    Nexus.storage = await initStorage();
     initCloudSync(Nexus);
-  });
+    Nexus.notify("Local storage ready");
+  } catch (error) {
+    console.error("NEXUS storage error:", error);
+    Nexus.notify("Storage unavailable. Desktop is still running.");
+  }
+}
 
-  initTabs();
-  Nexus.notify("Welcome to NEXUS V5");
+async function boot() {
+  try {
+    initTabs();
+    initDesktop(Nexus);
+    bindControls();
 
-  $("boot-screen").classList.add("hidden");
-  $("desktop").classList.remove("hidden");
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Show desktop even if optional services fail
+    $("boot-screen")?.classList.add("hidden");
+    $("desktop")?.classList.remove("hidden");
+
+    // Storage must never block desktop startup
+    startStorage();
+
+    // Register service worker
+    if ("serviceWorker" in navigator &&
+        location.protocol.startsWith("http")) {
+      navigator.serviceWorker.register("./sw.js")
+        .catch(error => console.warn("Service worker:", error));
+    }
+
+    Nexus.notify("Welcome to NEXUS V5");
+  } catch (error) {
+    console.error("NEXUS startup error:", error);
+
+    const bootScreen = $("boot-screen");
+    if (bootScreen) {
+      bootScreen.classList.remove("hidden");
+      const message = bootScreen.querySelector("p");
+      if (message) message.textContent = "STARTUP ERROR — CHECK CONSOLE";
+    }
+  }
 }
 
 boot();
-
