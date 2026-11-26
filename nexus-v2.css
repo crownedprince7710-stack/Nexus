@@ -1,0 +1,236 @@
+
+/* NEXUS 2.0 — VISUAL ENGINE */
+
+.taskbar {
+  position: absolute;
+  left: 50%;
+  right: auto;
+  bottom: 16px;
+  width: min(760px, calc(100% - 32px));
+  height: 64px;
+  transform: translateX(-50%);
+  padding: 0 13px;
+  border: 1px solid rgba(255,255,255,.17);
+  border-radius: 19px;
+  background: rgba(18,22,34,.72);
+  backdrop-filter: blur(28px) saturate(155%);
+  -webkit-backdrop-filter: blur(28px) saturate(155%);
+  box-shadow: 0 18px 60px #0005;
+  gap: 10px;
+}
+
+.taskbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg, rgba(255,255,255,.1), transparent
+  );
+}
+
+.task-apps {
+  justify-content: center;
+}
+
+.task-app {
+  border-radius: 11px;
+  transition: .2s;
+}
+
+.task-app:hover {
+  background: rgba(255,255,255,.12);
+  transform: translateY(-2px);
+}
+
+.task-right {
+  margin-left: auto;
+}
+
+/* Dynamic wallpaper */
+
+.desktop-wallpaper {
+  overflow: hidden;
+}
+
+.desktop-wallpaper::before,
+.desktop-wallpaper::after {
+  content: "";
+  position: absolute;
+  inset: -24%;
+  pointer-events: none;
+  filter: blur(52px);
+}
+
+.desktop-wallpaper::before {
+  background:
+    radial-gradient(
+      ellipse at 24% 35%,
+      rgba(53,115,210,.30), transparent 34%
+    ),
+    radial-gradient(
+      ellipse at 76% 64%,
+      rgba(133,67,177,.26), transparent 38%
+    );
+  animation: nexusAurora 24s ease-in-out infinite alternate;
+}
+
+.desktop-wallpaper::after {
+  background:
+    radial-gradient(
+      ellipse at 60% 18%,
+      rgba(26,173,183,.17), transparent 34%
+    );
+  animation: nexusAurora 31s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes nexusAurora {
+  from { transform: translate(-3%,-2%) scale(1); }
+  to { transform: translate(4%,3%) scale(1.12); }
+}
+
+/* Wallpaper themes */
+
+.desktop-wallpaper[data-nexus-wallpaper="ocean"]::before {
+  background: radial-gradient(
+    ellipse at 25% 35%, #0cadd0 0%, transparent 45%
+  );
+}
+
+.desktop-wallpaper[data-nexus-wallpaper="purple"]::before {
+  background: radial-gradient(
+    ellipse at 25% 35%, #9d4fda 0%, transparent 45%
+  );
+}
+
+.desktop-wallpaper[data-nexus-wallpaper="red"]::before {
+  background: radial-gradient(
+    ellipse at 25% 35%, #d33552 0%, transparent 45%
+  );
+}
+
+.desktop-wallpaper[data-nexus-wallpaper="minimal"]::before,
+.desktop-wallpaper[data-nexus-wallpaper="minimal"]::after {
+  opacity: .1;
+}
+
+/* Settings */
+
+.nexus-v2-settings {
+  margin-top: 22px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255,255,255,.035);
+}
+
+.nexus-v2-settings h3 {
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+.nexus-v2-settings p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.nexus-v2-setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+
+.nexus-v2-setting strong,
+.nexus-v2-setting small {
+  display: block;
+}
+
+.nexus-v2-setting strong {
+  font-size: 11px;
+}
+
+.nexus-v2-setting small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.nexus-v2-wallpapers {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.nexus-v2-wallpaper {
+  width: 35px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid #ffffff55;
+}
+
+.nexus-v2-wallpaper[data-wallpaper="default"] {
+  background: linear-gradient(135deg,#111b32,#543c69);
+}
+
+.nexus-v2-wallpaper[data-wallpaper="ocean"] {
+  background: linear-gradient(135deg,#031b2a,#087f9d);
+}
+
+.nexus-v2-wallpaper[data-wallpaper="purple"] {
+  background: linear-gradient(135deg,#160d2c,#8746ad);
+}
+
+.nexus-v2-wallpaper[data-wallpaper="red"] {
+  background: linear-gradient(135deg,#210b16,#a62e4b);
+}
+
+.nexus-v2-wallpaper[data-wallpaper="minimal"] {
+  background: linear-gradient(135deg,#202631,#68717e);
+}
+
+.nexus-v2-wallpaper[aria-pressed="true"] {
+  border-color: white;
+  outline: 2px solid var(--accent);
+}
+
+.nexus-v2-select {
+  background: #171d2c;
+  color: white;
+  border: 1px solid var(--line);
+  padding: 8px;
+  border-radius: 7px;
+}
+
+/* Mobile */
+
+@media(max-width:650px) {
+  .taskbar {
+    bottom: 9px;
+    width: calc(100% - 18px);
+    height: 57px;
+    border-radius: 16px;
+    padding: 0 7px;
+    gap: 3px;
+  }
+
+  .task-apps {
+    max-width: 48%;
+    gap: 2px;
+  }
+
+  .task-right {
+    gap: 2px;
+  }
+}
+
+/* Accessibility */
+
+@media(prefers-reduced-motion:reduce) {
+  .desktop-wallpaper::before,
+  .desktop-wallpaper::after {
+    animation: none !important;
+  }
+}
