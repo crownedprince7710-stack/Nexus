@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d19">
+  <meta name="description" content="NEXUS V5 Universal Web Desktop">
+  <title>NEXUS V5</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="boot-screen">
+    <div class="boot-logo">N<span>X</span></div>
+    <div class="boot-name">NEXUS</div>
+    <div class="boot-loader"><span></span></div>
+    <div class="boot-status" id="boot-status">INITIALIZING SYSTEM</div>
+  </div>
+
+  <main id="desktop" class="hidden">
+    <div id="wallpaper"></div>
+    <div id="desktop-icons" class="desktop-icons"></div>
+
+    <section id="window-layer"></section>
+
+    <div id="start-menu" class="start-menu hidden">
+      <div class="start-search">
+        <span>⌕</span>
+        <input id="start-search-input" placeholder="Search apps and settings">
+      </div>
+      <h3>Applications</h3>
+      <div id="start-app-grid" class="app-grid"></div>
+      <div class="start-footer">
+        <div class="user-avatar">N</div>
+        <span>NEXUS USER</span>
+        <button id="power-button" title="Power">⏻</button>
+      </div>
+    </div>
+
+    <div id="quick-panel" class="quick-panel hidden">
+      <h3>Quick settings</h3>
+      <div class="quick-grid">
+        <button data-setting="theme">◐ Theme</button>
+        <button data-setting="wallpaper">▧ Wallpaper</button>
+        <button data-setting="sound">♫ Sound</button>
+        <button data-setting="about">ⓘ About</button>
+      </div>
+      <p id="quick-clock"></p>
+    </div>
+
+    <footer id="taskbar">
+      <button id="start-button" class="task-icon" title="Start">
+        <span class="nexus-mark">N</span>
+      </button>
+      <button id="task-search" class="task-search">⌕ <span>Search</span></button>
+      <div id="task-apps"></div>
+      <div class="task-spacer"></div>
+      <button id="quick-button" class="tray-button">⌃</button>
+      <div class="system-clock">
+        <div id="clock-time">00:00</div>
+        <div id="clock-date">00/00/0000</div>
+      </div>
+    </footer>
+
+    <div id="context-menu" class="context-menu hidden"></div>
+    <div id="toast-container"></div>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
