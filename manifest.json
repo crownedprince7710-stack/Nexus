@@ -2,13 +2,12 @@
 {
   "name": "NEXUS V5 Desktop",
   "short_name": "NEXUS",
-  "description": "Universal browser-based desktop",
+  "description": "A personal browser-based desktop environment",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "landscape",
+  "orientation": "any",
   "background_color": "#080d19",
   "theme_color": "#080d19",
   "icons": []
 }
-
