@@ -1,28 +1,31 @@
 
-const CACHE_NAME = "nexus-desktop-v4";
+const CACHE_NAME = "nexus-v5-cache";
 
 const FILES_TO_CACHE = [
   "./",
   "./index.html",
   "./style.css",
-  "./nexus-v2.css",
-  "./nexus-v3.css",
   "./nexus-v4.css",
+  "./nexus-v5.css",
   "./app.js",
-  "./drive.js",
-  "./boot.js",
-  "./nexus-v2.js",
-  "./nexus-v3.js",
   "./nexus-v4.js",
+  "./nexus-v5.js",
   "./manifest.json"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache =>
-      cache.addAll(FILES_TO_CACHE)
-    )
+    caches.open(CACHE_NAME).then(async cache => {
+      for (const file of FILES_TO_CACHE) {
+        try {
+          await cache.add(file);
+        } catch (error) {
+          console.warn("Could not cache:", file);
+        }
+      }
+    })
   );
+
   self.skipWaiting();
 });
 
@@ -36,6 +39,7 @@ self.addEventListener("activate", event => {
       )
     )
   );
+
   self.clients.claim();
 });
 
@@ -43,22 +47,20 @@ self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      if (cached) return cached;
-
-      return fetch(event.request).then(response => {
-        if (
-          response &&
-          response.status === 200 &&
-          response.type === "basic"
-        ) {
+    fetch(event.request)
+      .then(response => {
+        if (response && response.ok) {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache =>
-            cache.put(event.request, copy)
-          );
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, copy);
+          });
         }
         return response;
-      }).catch(() => caches.match("./index.html"));
-    })
+      })
+      .catch(() =>
+        caches.match(event.request).then(cached =>
+          cached || caches.match("./index.html")
+        )
+      )
   );
 });
