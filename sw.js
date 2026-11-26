@@ -1,18 +1,35 @@
 
-const CACHE = "nexus-v5-shell-v1";
+const CACHE_NAME = "nexus-v5-fixed-v2";
 
 const FILES = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
-  "./manifest.json"
+  "./manifest.json",
+
+  "./modules/desktop.js",
+  "./modules/window-manager.js",
+  "./modules/browser.js",
+  "./modules/search.js",
+  "./modules/tabs.js",
+  "./modules/downloads.js",
+  "./modules/file-explorer.js",
+  "./modules/storage.js",
+  "./modules/cloud-sync.js",
+  "./modules/ai-agent.js",
+  "./modules/settings.js"
 ];
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(FILES))
+    caches.open(CACHE_NAME).then(async cache => {
+      await Promise.allSettled(
+        FILES.map(file => cache.add(file))
+      );
+    })
   );
+
   self.skipWaiting();
 });
 
@@ -20,11 +37,13 @@ self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
-        keys.filter(key => key !== CACHE)
+        keys
+          .filter(key => key !== CACHE_NAME)
           .map(key => caches.delete(key))
       )
     )
   );
+
   self.clients.claim();
 });
 
@@ -40,16 +59,27 @@ self.addEventListener("fetch", event => {
       .then(response => {
         if (response.ok) {
           const copy = response.clone();
-          caches.open(CACHE).then(cache =>
-            cache.put(event.request, copy)
-          );
+
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, copy);
+          });
         }
+
         return response;
       })
       .catch(async () => {
         const cached = await caches.match(event.request);
-        return cached || caches.match("./index.html");
+
+        if (cached) return cached;
+
+        if (event.request.mode === "navigate") {
+          return caches.match("./index.html");
+        }
+
+        return new Response("NEXUS resource unavailable offline.", {
+          status: 503,
+          headers: { "Content-Type": "text/plain" }
+        });
       })
   );
 });
-
