@@ -7,14 +7,14 @@ const FILES_TO_CACHE = [
   "./style.css",
   "./nexus-v2.css",
   "./nexus-v3.css",
+  "./nexus-v4.css",
   "./app.js",
   "./drive.js",
   "./boot.js",
   "./nexus-v2.js",
   "./nexus-v3.js",
-  "./manifest.json"
   "./nexus-v4.js",
-"./nexus-v4.css",
+  "./manifest.json"
 ];
 
 self.addEventListener("install", event => {
@@ -23,7 +23,6 @@ self.addEventListener("install", event => {
       cache.addAll(FILES_TO_CACHE)
     )
   );
-
   self.skipWaiting();
 });
 
@@ -37,7 +36,6 @@ self.addEventListener("activate", event => {
       )
     )
   );
-
   self.clients.claim();
 });
 
@@ -55,12 +53,10 @@ self.addEventListener("fetch", event => {
           response.type === "basic"
         ) {
           const copy = response.clone();
-
           caches.open(CACHE_NAME).then(cache =>
             cache.put(event.request, copy)
           );
         }
-
         return response;
       }).catch(() => caches.match("./index.html"));
     })
