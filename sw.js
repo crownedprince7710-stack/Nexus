@@ -1,5 +1,5 @@
 
-const CACHE_NAME = "nexus-desktop-v3";
+const CACHE_NAME = "nexus-desktop-v4";
 
 const FILES_TO_CACHE = [
   "./",
@@ -13,6 +13,8 @@ const FILES_TO_CACHE = [
   "./nexus-v2.js",
   "./nexus-v3.js",
   "./manifest.json"
+  "./nexus-v4.js",
+"./nexus-v4.css",
 ];
 
 self.addEventListener("install", event => {
