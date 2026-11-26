@@ -1,0 +1,336 @@
+
+/* ==========================================
+   PROJECT NEXUS V4 — DESKTOP UI
+========================================== */
+
+.v4-ai,
+.v4-store,
+.v4-files,
+.v4-webapp {
+  color: var(--text);
+  width: 100%;
+  max-width: 100%;
+}
+
+.v4-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 17px;
+}
+
+.v4-heading small {
+  color: #83b8ff;
+  font-size: 9px;
+  letter-spacing: 2px;
+  font-weight: 800;
+}
+
+.v4-heading h2 {
+  font-size: 23px;
+  margin: 7px 0;
+}
+
+.v4-heading p {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.v4-ai-logo {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(135deg,#315f9d,#8357ba);
+  font-size: 28px;
+  box-shadow: 0 8px 30px #477ac744;
+}
+
+/* AI SETTINGS */
+
+.v4-settings {
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: #ffffff06;
+}
+
+.v4-settings summary {
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.v4-settings input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 9px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: #101827;
+  color: white;
+  font-size: 11px;
+}
+
+.v4-settings button {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.v4-settings small {
+  display: block;
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+/* AI CHAT */
+
+.v4-chat {
+  height: 270px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #080d18;
+}
+
+.v4-message {
+  max-width: 88%;
+  padding: 11px 13px;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.v4-message.assistant {
+  align-self: flex-start;
+  background: #19263a;
+  border: 1px solid #ffffff12;
+}
+
+.v4-message.user {
+  align-self: flex-end;
+  background: #244c7c;
+}
+
+.v4-compose {
+  display: flex;
+  gap: 7px;
+  margin-top: 10px;
+  align-items: stretch;
+}
+
+.v4-compose textarea {
+  flex: 1;
+  min-width: 0;
+  resize: vertical;
+  padding: 11px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: #111827;
+  color: white;
+  font-size: 12px;
+}
+
+.v4-compose button {
+  min-width: 42px;
+}
+
+.v4-ai-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+/* APP STORE */
+
+.v4-store-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(auto-fit,minmax(135px,1fr));
+  gap: 11px;
+}
+
+.v4-store-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #ffffff06;
+  min-width: 0;
+}
+
+.v4-store-icon {
+  display: grid;
+  place-items: center;
+  width: 43px;
+  height: 43px;
+  border-radius: 12px;
+  background: #ffffff10;
+  font-size: 23px;
+}
+
+.v4-store-card strong {
+  font-size: 12px;
+}
+
+.v4-store-card small {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.v4-store-card button {
+  width: 100%;
+  margin-top: auto;
+  font-size: 10px;
+}
+
+/* EXTERNAL APPLICATIONS */
+
+.v4-webapp {
+  text-align: center;
+  padding: 35px 12px;
+}
+
+.v4-webapp-icon {
+  font-size: 50px;
+  margin-bottom: 13px;
+}
+
+.v4-webapp h2 {
+  font-size: 23px;
+}
+
+.v4-webapp p {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.v4-webapp button {
+  margin: 18px auto;
+}
+
+/* FILE MANAGER */
+
+.v4-file-toolbar {
+  margin-bottom: 12px;
+}
+
+.v4-files > input {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.v4-file-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.v4-file-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #ffffff06;
+}
+
+.v4-file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.v4-file-info > span {
+  font-size: 23px;
+}
+
+.v4-file-info strong,
+.v4-file-info small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.v4-file-info strong {
+  font-size: 11px;
+}
+
+.v4-file-info small {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.v4-file-actions {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.v4-file-actions button {
+  width: 31px;
+  height: 31px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: #ffffff0b;
+  color: white;
+  font-size: 17px;
+}
+
+.v4-empty {
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* GENERAL */
+
+.v4-note {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.6;
+  margin-top: 15px;
+}
+
+@media(max-width:560px) {
+  .v4-chat {
+    height: 210px;
+  }
+
+  .v4-heading h2 {
+    font-size: 19px;
+  }
+
+  .v4-ai-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .v4-store-grid {
+    grid-template-columns: repeat(2,minmax(0,1fr));
+  }
+}
