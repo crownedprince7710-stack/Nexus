@@ -4,129 +4,119 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080b14">
-  <meta name="description" content="PROJECT NEXUS - Your personal futuristic web desktop.">
-
-  <title>PROJECT NEXUS</title>
-
-  <link rel="stylesheet" href="style.css">
+  <meta name="theme-color" content="#080b13">
+  <meta name="description" content="PROJECT NEXUS - Your personal web desktop">
+  <title>NEXUS — Your Digital Space</title>
   <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-  <div class="wallpaper-glow"></div>
-
-  <main id="desktop">
-
-    <div class="desktop-icons" id="desktopIcons">
-
-      <div class="desktop-icon" data-app="explorer">
-        <div class="icon-box">📁</div>
-        <span>File Explorer</span>
-      </div>
-
-      <div class="desktop-icon" data-app="notes">
-        <div class="icon-box">📝</div>
-        <span>Notes</span>
-      </div>
-
-      <div class="desktop-icon" data-app="calculator">
-        <div class="icon-box">🧮</div>
-        <span>Calculator</span>
-      </div>
-
-      <div class="desktop-icon" data-app="settings">
-        <div class="icon-box">⚙️</div>
-        <span>Settings</span>
-      </div>
-
-      <div class="desktop-icon" data-app="about">
-        <div class="icon-box">◈</div>
-        <span>About NEXUS</span>
-      </div>
-
+  <!-- Welcome screen -->
+  <section id="welcomeScreen" class="welcome-screen">
+    <div class="welcome-glow"></div>
+    <div class="welcome-content">
+      <div class="nexus-mark">N</div>
+      <p class="eyebrow">YOUR PERSONAL DIGITAL SPACE</p>
+      <h1>NEXUS<span>.</span></h1>
+      <p class="welcome-subtitle">One space. Endless possibilities.</p>
+      <button id="enterButton" class="primary-button">ENTER NEXUS <span>→</span></button>
+      <p class="version">NEXUS WEB DESKTOP · VERSION 1.0</p>
     </div>
+  </section>
 
-    <div id="windowLayer"></div>
+  <!-- Desktop -->
+  <main id="desktop" class="desktop hidden">
+    <div class="desktop-wallpaper"></div>
 
+    <header class="desktop-header">
+      <div class="desktop-brand"><span class="brand-symbol">N</span> NEXUS</div>
+      <div id="desktopDate" class="desktop-date"></div>
+    </header>
+
+    <section id="desktopIcons" class="desktop-icons">
+      <button class="desktop-icon" data-app="explorer">
+        <span class="app-icon">📁</span><span>File Explorer</span>
+      </button>
+      <button class="desktop-icon" data-app="notes">
+        <span class="app-icon">📝</span><span>Notes</span>
+      </button>
+      <button class="desktop-icon" data-app="calculator">
+        <span class="app-icon">🧮</span><span>Calculator</span>
+      </button>
+      <button class="desktop-icon" data-app="browser">
+        <span class="app-icon">🌐</span><span>Browser</span>
+      </button>
+      <button class="desktop-icon" data-app="settings">
+        <span class="app-icon">⚙️</span><span>Settings</span>
+      </button>
+      <button class="desktop-icon" data-app="library">
+        <span class="app-icon">▦</span><span>App Library</span>
+      </button>
+    </section>
+
+    <div id="windowArea" class="window-area"></div>
+
+    <!-- Start menu -->
+    <section id="startMenu" class="start-menu hidden">
+      <div class="start-top">
+        <div class="start-avatar">N</div>
+        <div><strong>NEXUS USER</strong><small>Your workspace</small></div>
+      </div>
+      <div class="start-search">
+        <input id="startSearch" placeholder="Search apps..." autocomplete="off">
+      </div>
+      <p class="menu-heading">PINNED APPLICATIONS</p>
+      <div id="startApps" class="start-apps"></div>
+      <div class="start-bottom">
+        <span>NEXUS DESKTOP 1.0</span>
+        <button id="restartButton" title="Return to welcome screen">↻</button>
+      </div>
+    </section>
+
+    <!-- Control centre -->
+    <section id="controlPanel" class="control-panel hidden">
+      <div class="control-heading">
+        <strong>CONTROL CENTRE</strong>
+        <button id="closeControl">✕</button>
+      </div>
+      <div class="control-card">
+        <span>◈</span><div><strong>NEXUS SYSTEM</strong><small>Browser desktop active</small></div>
+      </div>
+      <div class="control-grid">
+        <button id="controlSettings">⚙️<span>Settings</span></button>
+        <button id="controlExplorer">📁<span>My Files</span></button>
+        <button id="controlNotes">📝<span>Notes</span></button>
+        <button id="backupButton">⬇️<span>Backup</span></button>
+      </div>
+      <p class="control-foot">Your workspace is stored in this browser.</p>
+    </section>
+
+    <!-- Desktop context menu -->
     <div id="contextMenu" class="context-menu hidden">
-      <button data-action="refresh">↻ Refresh</button>
-      <button data-action="new-note">＋ New Note</button>
+      <button data-action="refresh">↻ Refresh desktop</button>
+      <button data-action="notes">＋ New note</button>
       <button data-action="settings">⚙ Personalise</button>
+      <button data-action="explorer">📁 Open NEXUS Drive</button>
     </div>
 
-    <div id="startMenu" class="start-menu hidden">
-
-      <div class="start-header">
-        <div class="nexus-logo">N</div>
-        <div>
-          <strong>PROJECT NEXUS</strong>
-          <small>Your digital workspace</small>
+    <!-- Taskbar -->
+    <footer class="taskbar">
+      <button id="startButton" class="task-start" title="Start menu">
+        <span class="task-logo">N</span>
+      </button>
+      <div id="taskApps" class="task-apps"></div>
+      <div class="task-right">
+        <button id="controlButton" class="tray-button" title="Control centre">⌃</button>
+        <div class="tray-clock">
+          <strong id="taskClock">00:00</strong>
+          <small id="taskDate"></small>
         </div>
       </div>
-
-      <input id="startSearch" type="text" placeholder="Search apps...">
-
-      <h4>PINNED APPLICATIONS</h4>
-
-      <div class="pinned-apps">
-        <button data-app="explorer">📁 Explorer</button>
-        <button data-app="notes">📝 Notes</button>
-        <button data-app="calculator">🧮 Calculator</button>
-        <button data-app="settings">⚙ Settings</button>
-        <button data-app="about">◈ About</button>
-      </div>
-
-      <div class="start-footer">
-        <span>◈ NEXUS USER</span>
-        <button id="powerButton">⏻</button>
-      </div>
-
-    </div>
-
-    <div id="searchPanel" class="search-panel hidden">
-      <input id="globalSearch" type="text" placeholder="Search apps and tools...">
-      <div id="searchResults"></div>
-    </div>
-
-    <div id="controlPanel" class="control-panel hidden">
-      <h3>CONTROL CENTRE</h3>
-      <div class="control-grid">
-        <button class="control-tile active">◉ Wi-Fi</button>
-        <button class="control-tile active">◈ Bluetooth</button>
-        <button class="control-tile">☾ Focus</button>
-        <button class="control-tile">✈ Airplane</button>
-      </div>
-      <label>Brightness (interface only)</label>
-      <input type="range" min="20" max="100" value="80">
-      <label>Volume (interface only)</label>
-      <input type="range" min="0" max="100" value="70">
-    </div>
-
+    </footer>
   </main>
 
-  <footer class="taskbar">
-
-    <button class="taskbar-start" id="startButton">
-      <span class="nexus-logo small">N</span>
-    </button>
-
-    <button id="searchButton" class="taskbar-button">⌕</button>
-
-    <div id="taskbarApps"></div>
-
-    <div class="taskbar-right">
-      <button id="controlButton">◉</button>
-      <div class="clock">
-        <span id="clockTime">00:00</span>
-        <small id="clockDate"></small>
-      </div>
-    </div>
-
-  </footer>
+  <input type="file" id="restoreInput" accept="application/json" hidden>
 
   <script src="app.js"></script>
-
 </body>
 </html>
