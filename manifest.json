@@ -2,12 +2,11 @@
 {
   "name": "PROJECT NEXUS",
   "short_name": "NEXUS",
-  "description": "Your personal futuristic web desktop",
+  "description": "Your personal browser-based desktop",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#080b14",
-  "theme_color": "#080b14",
-  "icons": []
+  "background_color": "#080b13",
+  "theme_color": "#080b13"
 }
